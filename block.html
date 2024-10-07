@@ -34,7 +34,7 @@
     <div id="cf-error-details" class="cf-error-details-wrapper">
       <div class="cf-wrapper cf-header cf-error-overview">
         <h1 data-translate="block_headline">Sorry, you have been blocked</h1>
-        <h2 class="cf-subheadline"><span data-translate="unable_to_access">You are unable to access</span> <span id="site-name">my protect site.</span></h2>
+        <h2 class="cf-subheadline"><span data-translate="unable_to_access">You are unable to access</span> <span id="site">my protect site.</span></h2>
       </div><!-- /.header -->
 
       <div class="cf-section cf-highlight">
@@ -71,9 +71,9 @@
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get(name);
   }
-  const siteName = getUrlParameter('site');
-  if (siteName) {
-    document.getElementById('site-name').textContent = siteName;
+  const site = getUrlParameter('site');
+  if (site) {
+    document.getElementById('site').textContent = site;
   }
 </script>
 
