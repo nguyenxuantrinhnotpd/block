@@ -28,7 +28,7 @@ body {
     border-bottom: 1px solid rgb(188, 193, 194);
     box-sizing: border-box;
     
-    svg {
+    img {
       position: absolute;
       top: 50%;
       left: 0;
