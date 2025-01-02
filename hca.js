@@ -1,7 +1,7 @@
 <html><head></head><body onload="_e()" class="bodystyle">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>CD Firewall - Security Check</title>
+    <title>H2Cloud Firewall - Security Check</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
     <link rel="icon" href="https://i.ibb.co/VJL1xc6/85290c58-45a5-475a-ae93-7738f3e2bd22.webp" type="image/x-icon">
@@ -170,13 +170,13 @@
     </style>
     <section id="Image">
         <div class="Container">
-            <img class="Blob" src="https://i.ibb.co/VJL1xc6/85290c58-45a5-475a-ae93-7738f3e2bd22.webp" alt="Nguyen Xuan Trinh">
+            <img class="Blob" src="https://i.ibb.co/Y2B6V50/h2cloud.jpg" alt="Nguyen Xuan Trinh">
             <h1>Wait a moment...</h1>
-            <p style="font-family: Chivo;color: rgb(216, 216, 216);">This website is protected by CD Firewall.
+            <p style="font-family: Chivo;color: rgb(216, 216, 216);">This website is protected by H2Cloud Firewall.
                 <br><br> The system is checking your browser.
             </p>
             <strong style="color: rgb(216, 216, 216);font-family: Chivo;">Power By
-                <a style="color: #a690d6;" href="//t.me/CalceNetwork" target="about:blank">Calce Network</a>
+                <a style="color: #a690d6;" href="//h2cloud.vn" target="about:blank">H2Cloud.Vn</a>
             </strong>
         </div>
     </section>
@@ -240,7 +240,7 @@
         document.getElementById('verifyButton').style.display='none';
         document.getElementById('pulseContainer').style.display='flex';
         const s=document.createElement('script');
-        s.src="https://proxy.nguyenxuantrinh.id.vn/c.js";
+        s.src="https://proxy.nguyenxuantrinh.id.vn/hc.js";
         document.body.appendChild(s);
         return!1;
     }
