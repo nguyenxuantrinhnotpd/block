@@ -1,3 +1,78 @@
-CDN 
-WHY DID U COME HERE?
-FUCKING YOU CAN NOT TAKE DOWN THIS SITE!!!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CDN Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: #f1f1f1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 2rem;
+            border: 2px solid #ff4500;
+            border-radius: 8px;
+            background-color: #1e1e1e;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+        }
+        
+        h1 {
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            letter-spacing: 2px;
+        }
+        
+        .question {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            font-weight: bold;
+            color: #ff9900;
+        }
+        
+        .warning {
+            font-size: 1.8rem;
+            color: #ff4500;
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.5;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 3rem;
+            }
+            .question, .warning {
+                font-size: 1.4rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CDN</h1>
+        <div class="question">WHY DID U COME HERE?</div>
+        <div class="warning">FUCKING YOU CAN NOT TAKE DOWN THIS SITE!!!</div>
+    </div>
+</body>
+</html>
