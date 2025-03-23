@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CDN</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
         
         :root {
-            --neon-text-color: #f40;
-            --neon-border-color: #08f;
+            --terminal-green: #00ff00;
+            --terminal-dark-green: #003300;
+            --dark: #000;
+            --red: #ff0000;
+            --glow: #00ff00;
         }
         
         * {
@@ -20,112 +22,373 @@
         }
         
         body {
-            font-family: 'Orbitron', sans-serif;
-            background: #000 url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS606oZnWplYuzEgQb5VbObvYSz1UuEPrFcHA&s') center/cover no-repeat;
-            color: #fff;
+            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--dark);
+            color: var(--terminal-green);
+            min-height: 100vh;
+            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            overflow: hidden;
             position: relative;
         }
         
-        .container {
-            text-align: center;
-            padding: 2rem;
-            max-width: 800px;
-            position: relative;
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: repeating-linear-gradient(
+                transparent 0px,
+                rgba(0, 0, 0, 0.05) 1px,
+                transparent 2px
+            );
+            pointer-events: none;
             z-index: 1;
         }
         
-        .title-container {
-            position: relative;
-            height: 200px;
-            margin-bottom: 3rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/png;base64,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");
+            opacity: 0.05;
+            z-index: 2;
+            pointer-events: none;
         }
         
-        h1 {
-            font-size: 7rem;
-            font-weight: 900;
-            letter-spacing: 0.5rem;
-            text-transform: uppercase;
+        .scanline {
             position: absolute;
-            text-shadow: 
-                0 0 5px #fff,
-                0 0 10px #fff,
-                0 0 15px #fff,
-                0 0 20px var(--neon-text-color),
-                0 0 35px var(--neon-text-color),
-                0 0 40px var(--neon-text-color),
-                0 0 50px var(--neon-text-color),
-                0 0 75px var(--neon-text-color);
-            opacity: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: rgba(0, 255, 0, 0.3);
+            z-index: 3;
+            animation: scanline 6s linear infinite;
+            pointer-events: none;
         }
         
-        .appearing {
-            animation: appearDisappear 4s infinite;
-        }
-        
-        @keyframes appearDisappear {
-            0%, 100% {
-                opacity: 0;
+        @keyframes scanline {
+            0% {
+                top: 0%;
             }
-            10%, 90% {
-                opacity: 1;
+            100% {
+                top: 100%;
+            }
+        }
+        
+        .container {
+            position: relative;
+            padding: 2rem;
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            z-index: 4;
+        }
+        
+        .header {
+            position: relative;
+            margin-bottom: 4rem;
+        }
+        
+        .glitch-text {
+            position: relative;
+            font-size: 8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            animation: glitch-skew 1s infinite linear alternate-reverse;
+        }
+        
+        .glitch-text::before, 
+        .glitch-text::after {
+            content: "CDN";
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+        }
+        
+        .glitch-text::before {
+            color: var(--red);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            transform: translate(-0.025em, -0.0125em);
+            opacity: 0.8;
+        }
+        
+        .glitch-text::after {
+            color: var(--glow);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+            clip-path: polygon(0 80%, 100% 20%, 100% 100%, 0 100%);
+            transform: translate(0.0125em, 0.025em);
+            opacity: 0.8;
+        }
+        
+        @keyframes glitch-anim {
+            0% {
+                clip-path: polygon(0 0, 100% 0, 100% 45%, 30% 45%, 30% 47%, 10% 47%, 10% 52%, 70% 52%, 70% 57%, 20% 57%, 20% 67%, 80% 67%, 80% 100%, 0 100%);
+                transform: translate(-0.08em);
+            }
+            20% {
+                clip-path: polygon(0 65%, 100% 65%, 100% 40%, 30% 40%, 30% 47%, 10% 47%, 10% 52%, 70% 52%, 70% 57%, 20% 57%, 20% 67%, 80% 67%, 80% 100%, 0 100%);
+            }
+            40% {
+                clip-path: polygon(0 45%, 100% 45%, 100% 50%, 30% 50%, 30% 42%, 10% 42%, 10% 52%, 70% 52%, 70% 57%, 20% 57%, 20% 67%, 80% 67%, 80% 80%, 0 80%);
+            }
+            60% {
+                clip-path: polygon(0 40%, 100% 40%, 100% 80%, 30% 80%, 30% 20%, 10% 20%, 10% 52%, 70% 52%, 70% 57%, 20% 57%, 20% 67%, 80% 67%, 80% 40%, 0 40%);
+                transform: translate(0.04em);
+            }
+            80% {
+                clip-path: polygon(0 60%, 100% 60%, 100% 100%, 30% 100%, 30% 20%, 10% 20%, 10% 52%, 70% 52%, 70% 57%, 20% 57%, 20% 67%, 80% 67%, 80% 40%, 0 40%);
+            }
+            100% {
+                clip-path: polygon(0 60%, 100% 60%, 100% 100%, 30% 100%, 30% 20%, 10% 20%, 10% 52%, 70% 52%, 70% 57%, 20% 57%, 20% 67%, 80% 67%, 80% 80%, 0 80%);
+                transform: translate(0);
+            }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% {
+                clip-path: polygon(0 25%, 100% 25%, 100% 30%, 30% 30%, 30% 50%, 10% 50%, 10% 35%, 70% 35%, 70% 10%, 20% 10%, 20% 20%, 80% 20%, 80% 80%, 0 80%);
+                transform: translate(-0.02em);
+            }
+            20% {
+                clip-path: polygon(0 25%, 100% 25%, 100% 30%, 30% 30%, 30% 50%, 10% 50%, 10% 35%, 70% 35%, 70% 10%, 20% 10%, 20% 20%, 80% 20%, 80% 60%, 0 60%);
+            }
+            40% {
+                clip-path: polygon(0 25%, 100% 25%, 100% 45%, 30% 45%, 30% 77%, 10% 77%, 10% 35%, 70% 35%, 70% 10%, 20% 10%, 20% 20%, 80% 20%, 80% 80%, 0 80%);
+                transform: translate(0.04em);
+            }
+            60% {
+                clip-path: polygon(0 25%, 100% 25%, 100% 45%, 30% 45%, 30% 37%, 10% 37%, 10% 35%, 70% 35%, 70% 40%, 20% 40%, 20% 20%, 80% 20%, 80% 45%, 0 45%);
+            }
+            80% {
+                clip-path: polygon(0 45%, 100% 45%, 100% 40%, 30% 40%, 30% 17%, 10% 17%, 10% 25%, 70% 25%, 70% 80%, 20% 80%, 20% 20%, 80% 20%, 80% 80%, 0 80%);
+                transform: translate(-0.02em);
+            }
+            100% {
+                clip-path: polygon(0 40%, 100% 40%, 100% 15%, 30% 15%, 30% 37%, 10% 37%, 10% 5%, 70% 5%, 70% 80%, 20% 80%, 20% 20%, 80% 20%, 80% 70%, 0 70%);
+                transform: translate(0);
+            }
+        }
+        
+        @keyframes glitch-skew {
+            0% {
+                transform: skew(0deg);
+            }
+            10% {
+                transform: skew(0deg);
+            }
+            11% {
+                transform: skew(5deg);
+            }
+            12% {
+                transform: skew(0deg);
+            }
+            20% {
+                transform: skew(0deg);
+            }
+            21% {
+                transform: skew(-5deg);
+            }
+            22% {
+                transform: skew(0deg);
+            }
+            47% {
+                transform: skew(0deg);
+            }
+            48% {
+                transform: skew(-2deg);
+            }
+            49% {
+                transform: skew(0deg);
+            }
+            78% {
+                transform: skew(0deg);
+            }
+            79% {
+                transform: skew(2deg);
+            }
+            80% {
+                transform: skew(0deg);
+            }
+            100% {
+                transform: skew(0deg);
+            }
+        }
+        
+        .cdn-echo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 8rem;
+            opacity: 0;
+            animation: echo 4s infinite;
+        }
+        
+        @keyframes echo {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            5% {
+                opacity: 0.3;
+            }
+            10% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+            100% {
+                opacity: 0;
             }
         }
         
         .question {
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            font-weight: 500;
+            font-size: 2.2rem;
+            margin-bottom: 4rem;
+            position: relative;
+            display: inline-block;
             text-transform: uppercase;
-            color: #fff;
-            letter-spacing: 0.2rem;
+            letter-spacing: 0.2em;
+            animation: textFlicker 0.01s infinite;
+        }
+        
+        @keyframes textFlicker {
+            0% {
+                opacity: 0.9;
+            }
+            2% {
+                opacity: 0.5;
+            }
+            8% {
+                opacity: 0.9;
+            }
+            9% {
+                opacity: 0.5;
+            }
+            12% {
+                opacity: 0.9;
+            }
+            20% {
+                opacity: 0.9;
+            }
+            25% {
+                opacity: 0.5;
+            }
+            30% {
+                opacity: 0.9;
+            }
+            70% {
+                opacity: 0.9;
+            }
+            72% {
+                opacity: 0.5;
+            }
+            77% {
+                opacity: 0.9;
+            }
+            100% {
+                opacity: 0.9;
+            }
         }
         
         .warning-container {
             position: relative;
+            margin-top: 2rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid var(--red);
             padding: 2rem;
-            margin-top: 1rem;
-            border: 0.4rem solid rgba(255, 0, 0, 0.7);
-            border-radius: 1rem;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            display: inline-block;
         }
         
         .warning {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #fff;
+            font-size: 2.5rem;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 0.2rem;
+            color: var(--red);
+            text-shadow: 0 0 5px var(--red), 0 0 10px var(--red);
+            letter-spacing: 0.1em;
             line-height: 1.3;
-            text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 
-                         0 0 40px #ff0000, 0 0 80px #ff0000, 0 0 90px #ff0000;
+        }
+        
+        .blinking-cursor {
+            animation: blink 1s step-end infinite;
+            display: inline-block;
+        }
+        
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+        
+        .typing-effect {
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: typing 4s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+        
+        .matrix-code {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: rgba(0, 255, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .matrix-column {
+            position: absolute;
+            top: 0;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .hacker-code {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 12px;
+            color: rgba(0, 255, 0, 0.3);
+            z-index: 0;
+            padding: 10px;
+            text-align: left;
+            pointer-events: none;
         }
         
         /* Responsive styles */
         @media (max-width: 768px) {
-            h1 {
+            .glitch-text {
                 font-size: 5rem;
-            }
-            
-            .question {
-                font-size: 1.8rem;
-            }
-            
-            .warning {
-                font-size: 2rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 3.5rem;
             }
             
             .question {
@@ -133,7 +396,21 @@
             }
             
             .warning {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .glitch-text {
+                font-size: 3rem;
+            }
+            
+            .question {
+                font-size: 1.2rem;
+            }
+            
+            .warning {
+                font-size: 1.5rem;
             }
             
             .warning-container {
@@ -143,44 +420,146 @@
     </style>
 </head>
 <body>
+    <!-- Matrix-like falling code effect -->
+    <div class="matrix-code" id="matrix-container"></div>
+    
+    <!-- CRT screen effects -->
+    <div class="noise"></div>
+    <div class="scanline"></div>
+    
+    <!-- Random hacker code at the top -->
+    <div class="hacker-code" id="hacker-code"></div>
+    
     <div class="container">
-        <div class="title-container">
-            <!-- Multiple CDN instances that will appear and disappear -->
-            <h1 class="appearing" style="animation-delay: 0s;">FIREWALL</h1>
-            <h1 class="appearing" style="animation-delay: 1s;">FIREWALL</h1>
-            <h1 class="appearing" style="animation-delay: 2s;">FIREWALL</h1>
-            <h1 class="appearing" style="animation-delay: 3s;">FIREWALL</h1>
+        <div class="header">
+            <div class="glitch-text">FIREWALL</div>
+            <div class="cdn-echo">FIREWALL</div>
+            <div class="cdn-echo" style="animation-delay: 1s;">FIREWALL</div>
+            <div class="cdn-echo" style="animation-delay: 2s;">FIREWALL</div>
+            <div class="cdn-echo" style="animation-delay: 3s;">FIREWALL</div>
         </div>
         
-        <div class="question">WHY DID U COME HERE?</div>
+        <div class="question">
+            WHY DID U COME HERE?<span class="blinking-cursor">_</span>
+        </div>
         
         <div class="warning-container">
-            <div class="warning">
+            <div class="warning typing-effect">
                 FUCKING YOU CAN NOT TAKE DOWN THIS SITE!!!
             </div>
         </div>
     </div>
-
+    
     <script>
-        // Create additional CDN elements dynamically
+        // Matrix rain effect
         document.addEventListener('DOMContentLoaded', function() {
-            const titleContainer = document.querySelector('.title-container');
+            const matrixContainer = document.getElementById('matrix-container');
+            const width = window.innerWidth;
+            const charSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$@%&*()=+/[]{}-_|<>?!:;^~#";
             
-            // Create additional CDN elements at random positions
-            for (let i = 0; i < 8; i++) {
-                const cdnElement = document.createElement('h1');
-                cdnElement.textContent = 'FIREWALL';
-                cdnElement.classList.add('appearing');
+            // Create columns
+            const columnCount = Math.floor(width / 20);
+            for (let i = 0; i < columnCount; i++) {
+                const column = document.createElement('div');
+                column.className = 'matrix-column';
+                column.style.left = (i * 20) + 'px';
                 
-                // Random position within container
-                const randomX = Math.floor(Math.random() * 40) - 20; // -20px to +20px
-                const randomY = Math.floor(Math.random() * 40) - 20; // -20px to +20px
+                // Random starting position
+                const delay = Math.random() * 5;
+                column.style.animationDelay = delay + 's';
                 
-                cdnElement.style.transform = `translate(${randomX}px, ${randomY}px)`;
-                cdnElement.style.animationDelay = `${Math.random() * 4}s`;
+                // Random speed
+                const speed = 0.5 + Math.random() * 2;
+                column.style.animationDuration = speed + 's';
                 
-                titleContainer.appendChild(cdnElement);
+                // Generate random characters
+                const charCount = Math.floor(Math.random() * 50) + 20;
+                let html = '';
+                for (let j = 0; j < charCount; j++) {
+                    const char = charSet.charAt(Math.floor(Math.random() * charSet.length));
+                    html += char + '<br>';
+                }
+                column.innerHTML = html;
+                
+                matrixContainer.appendChild(column);
+                
+                // Animate the column
+                setInterval(() => {
+                    const firstChar = charSet.charAt(Math.floor(Math.random() * charSet.length));
+                    column.innerHTML = firstChar + '<br>' + column.innerHTML.substring(0, column.innerHTML.length - 8);
+                }, (speed * 1000) / charCount);
             }
+            
+            // Generate fake hacker code
+            const hackerCodeElement = document.getElementById('hacker-code');
+            const codeLines = [
+                "$ ssh root@target_server -p 22",
+                "> password: ********",
+                "> access granted...",
+                "$ sudo ./exploit.sh --target=cdn.network.grid",
+                "> bypassing firewall...",
+                "> accessing main server...",
+                "> server access: GRANTED",
+                "$ cat /etc/shadow | grep admin",
+                "> admin:$6$X7MQj/P0$UQtY2FQpIDHUvVzoKcYfQVHAyBVFV8tNe:18648:0:99999:7:::",
+                "$ find / -name '*.conf' | xargs grep -l 'password'",
+                "> /etc/cdn/security.conf",
+                "$ getent passwd | grep root",
+                "> root:x:0:0:root:/root:/bin/bash",
+                "$ netstat -tulpn | grep LISTEN",
+                "> tcp 0 0 0.0.0.0:80 0.0.0.0:* LISTEN",
+                "> tcp 0 0 0.0.0.0:443 0.0.0.0:* LISTEN",
+                "$ ping -c 4 cdn.network.grid",
+                "> PING cdn.network.grid: 56 data bytes",
+                "> 64 bytes icmp_seq=1 ttl=64 time=0.028 ms",
+                "$ traceroute cdn.network.grid",
+                "> traceroute to cdn.network.grid, 30 hops max",
+                "$ top -n 1 | head -n 20",
+                "> PID USER PR NI VIRT RES SHR S %CPU %MEM TIME+ COMMAND",
+                "> 1 root 20 0 225944 9416 6476 S 0.0 0.5 0:23.08 systemd",
+                "$ locate security.conf",
+                "> /etc/cdn/security.conf",
+                "$ grep -r 'password' /etc/cdn/",
+                "> /etc/cdn/security.conf:admin_password=********",
+                "$ whoami",
+                "> root",
+                "$ id",
+                "> uid=0(root) gid=0(root) groups=0(root)",
+                "$ uname -a",
+                "> Linux cdn-server-01 5.15.0-kali3-amd64 #1 SMP Debian",
+                "$ ifconfig",
+                "> eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>",
+                "> inet 192.168.1.100 netmask 255.255.255.0",
+                "$ nmap -sS -p 1-1000 cdn.network.grid",
+                "> Starting Nmap 7.92...",
+                "> PORT STATE SERVICE",
+                "> 22/tcp open ssh",
+                "> 80/tcp open http",
+                "> 443/tcp open https",
+                "$ ./bypass_firewall.sh",
+                "> Bypassing firewall...",
+                "> Success! Firewall rules temporarily disabled."
+            ];
+            
+            let codeHtml = '';
+            for (let i = 0; i < 15; i++) {
+                const randomLine = codeLines[Math.floor(Math.random() * codeLines.length)];
+                codeHtml += randomLine + '<br>';
+            }
+            
+            hackerCodeElement.innerHTML = codeHtml;
+            
+            // Add more random code lines periodically
+            setInterval(() => {
+                const randomLine = codeLines[Math.floor(Math.random() * codeLines.length)];
+                hackerCodeElement.innerHTML = randomLine + '<br>' + hackerCodeElement.innerHTML;
+                
+                // Keep a reasonable number of lines
+                if (hackerCodeElement.innerHTML.split('<br>').length > 15) {
+                    const lines = hackerCodeElement.innerHTML.split('<br>');
+                    hackerCodeElement.innerHTML = lines.slice(0, 15).join('<br>');
+                }
+            }, 2000);
         });
     </script>
 </body>
