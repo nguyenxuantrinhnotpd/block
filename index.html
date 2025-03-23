@@ -3,76 +3,341 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CDN Page</title>
+    <title>CDN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <style>
-        body {
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&display=swap');
+        
+        :root {
+            --neon-text-color: #f40;
+            --neon-border-color: #08f;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-color: #121212;
-            color: #f1f1f1;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background: #000 url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS606oZnWplYuzEgQb5VbObvYSz1UuEPrFcHA&s') center/cover no-repeat;
+            background-attachment: fixed;
+            color: #fff;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             overflow: hidden;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: -1;
         }
         
         .container {
             text-align: center;
-            max-width: 800px;
             padding: 2rem;
-            border: 2px solid #ff4500;
-            border-radius: 8px;
-            background-color: #1e1e1e;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .glitch-wrapper {
+            position: relative;
+            margin-bottom: 3rem;
         }
         
         h1 {
-            font-size: 4rem;
-            margin-bottom: 2rem;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-            letter-spacing: 2px;
-        }
-        
-        .question {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            font-weight: bold;
-            color: #ff9900;
-        }
-        
-        .warning {
-            font-size: 1.8rem;
-            color: #ff4500;
-            font-weight: bold;
+            font-size: 7rem;
+            font-weight: 900;
+            letter-spacing: 0.5rem;
             text-transform: uppercase;
-            line-height: 1.5;
+            text-shadow: 
+                0 0 5px #fff,
+                0 0 10px #fff,
+                0 0 15px #fff,
+                0 0 20px var(--neon-text-color),
+                0 0 35px var(--neon-text-color),
+                0 0 40px var(--neon-text-color),
+                0 0 50px var(--neon-text-color),
+                0 0 75px var(--neon-text-color);
             animation: pulse 2s infinite;
         }
         
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0%, 100% {
+                text-shadow: 
+                    0 0 5px #fff,
+                    0 0 10px #fff,
+                    0 0 15px #fff,
+                    0 0 20px var(--neon-text-color),
+                    0 0 35px var(--neon-text-color),
+                    0 0 40px var(--neon-text-color),
+                    0 0 50px var(--neon-text-color),
+                    0 0 75px var(--neon-text-color);
+            }
+            50% {
+                text-shadow: 
+                    0 0 2px #fff,
+                    0 0 5px #fff,
+                    0 0 7px #fff,
+                    0 0 10px var(--neon-text-color),
+                    0 0 17px var(--neon-text-color),
+                    0 0 20px var(--neon-text-color),
+                    0 0 25px var(--neon-text-color),
+                    0 0 37px var(--neon-text-color);
+            }
         }
         
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 3rem;
+        .question {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            background: linear-gradient(to right, #00c6ff, #0072ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 0.2rem;
+            animation: fadeInUp 1s 0.5s both;
+        }
+        
+        .warning-container {
+            position: relative;
+            padding: 2rem;
+            margin-top: 1rem;
+            border: 0.4rem solid transparent;
+            border-radius: 1rem;
+            animation: borderGlow 4s infinite alternate;
+            overflow: hidden;
+        }
+        
+        @keyframes borderGlow {
+            0% {
+                border-color: rgba(255, 0, 0, 0.7);
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
             }
-            .question, .warning {
-                font-size: 1.4rem;
+            50% {
+                border-color: rgba(255, 0, 0, 0.3);
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+            }
+            100% {
+                border-color: rgba(255, 0, 0, 0.7);
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
+            }
+        }
+        
+        .warning {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            line-height: 1.3;
+            position: relative;
+            animation: textFlicker 3s infinite alternate;
+        }
+        
+        @keyframes textFlicker {
+            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+                opacity: 1;
+                text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #ff0000, 0 0 80px #ff0000, 0 0 90px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;
+            }
+            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+                opacity: 0.4;
+                text-shadow: none;
+            }
+        }
+        
+        /* Cyber lines animation */
+        .cyber-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .cyber-line {
+            position: absolute;
+            background: linear-gradient(to right, transparent, rgba(0, 30, 255, 0.5), transparent);
+            height: 1px;
+            width: 100%;
+            animation: moveLine 4s infinite linear;
+        }
+        
+        .cyber-line:nth-child(1) {
+            top: 20%;
+            animation-delay: 0s;
+        }
+        
+        .cyber-line:nth-child(2) {
+            top: 40%;
+            animation-delay: 1s;
+        }
+        
+        .cyber-line:nth-child(3) {
+            top: 60%;
+            animation-delay: 2s;
+        }
+        
+        .cyber-line:nth-child(4) {
+            top: 80%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes moveLine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+        
+        /* Matrix-like rain effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            opacity: 0.15;
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 5rem;
+            }
+            
+            .question {
+                font-size: 1.8rem;
+            }
+            
+            .warning {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 3.5rem;
+            }
+            
+            .question {
+                font-size: 1.5rem;
+            }
+            
+            .warning {
+                font-size: 1.6rem;
+            }
+            
+            .warning-container {
+                padding: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>CDN</h1>
-        <div class="question">WHY DID U COME HERE?</div>
-        <div class="warning">FUCKING YOU CAN NOT TAKE DOWN THIS SITE!!!</div>
+    <div class="matrix-rain" id="matrix-rain"></div>
+    <div class="container animate__animated animate__fadeIn">
+        <div class="glitch-wrapper">
+            <h1 class="animate__animated animate__fadeInDown">CDN</h1>
+        </div>
+        
+        <div class="question animate__animated animate__fadeInUp">WHY DID U COME HERE?</div>
+        
+        <div class="warning-container">
+            <div class="cyber-lines">
+                <div class="cyber-line"></div>
+                <div class="cyber-line"></div>
+                <div class="cyber-line"></div>
+                <div class="cyber-line"></div>
+            </div>
+            <div class="warning animate__animated animate__pulse animate__infinite">
+                FUCKING YOU CAN NOT TAKE DOWN THIS SITE!!!
+            </div>
+        </div>
     </div>
+
+    <script>
+        // Matrix rain effect
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.createElement('canvas');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            canvas.style.display = 'block';
+            document.getElementById('matrix-rain').appendChild(canvas);
+            
+            const ctx = canvas.getContext('2d');
+            
+            // Matrix characters
+            const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
+            const characters = matrix.split('');
+            
+            const fontSize = 16;
+            const columns = canvas.width / fontSize;
+            
+            // Array for drops - one per column
+            const drops = [];
+            
+            // Set initial position for each drop
+            for (let i = 0; i < columns; i++) {
+                drops[i] = 1;
+            }
+            
+            // Draw the matrix
+            function draw() {
+                // Black semi-transparent background to show trail
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#0f0'; // Digital green color
+                ctx.font = fontSize + 'px monospace';
+                
+                for (let i = 0; i < drops.length; i++) {
+                    // Get random character
+                    const text = characters[Math.floor(Math.random() * characters.length)];
+                    
+                    // Draw the character
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    
+                    // Move to the next position
+                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                        drops[i] = 0;
+                    }
+                    
+                    // Increment position
+                    drops[i]++;
+                }
+            }
+            
+            setInterval(draw, 35);
+            
+            // Resize canvas when window is resized
+            window.addEventListener('resize', function() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                // Recalculate columns
+                const newColumns = canvas.width / fontSize;
+                // Reset drops array
+                for (let i = 0; i < newColumns; i++) {
+                    if (!drops[i]) drops[i] = 1;
+                }
+            });
+        });
+    </script>
 </body>
 </html>
