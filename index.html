@@ -22,7 +22,6 @@
         body {
             font-family: 'Orbitron', sans-serif;
             background: #000 url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS606oZnWplYuzEgQb5VbObvYSz1UuEPrFcHA&s') center/cover no-repeat;
-            background-attachment: fixed;
             color: #fff;
             display: flex;
             justify-content: center;
@@ -30,17 +29,6 @@
             min-height: 100vh;
             overflow: hidden;
             position: relative;
-        }
-        
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: -1;
         }
         
         .container {
@@ -51,9 +39,13 @@
             z-index: 1;
         }
         
-        .glitch-wrapper {
+        .title-container {
             position: relative;
+            height: 200px;
             margin-bottom: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
         h1 {
@@ -61,6 +53,7 @@
             font-weight: 900;
             letter-spacing: 0.5rem;
             text-transform: uppercase;
+            position: absolute;
             text-shadow: 
                 0 0 5px #fff,
                 0 0 10px #fff,
@@ -70,31 +63,19 @@
                 0 0 40px var(--neon-text-color),
                 0 0 50px var(--neon-text-color),
                 0 0 75px var(--neon-text-color);
-            animation: pulse 2s infinite;
+            opacity: 0;
         }
         
-        @keyframes pulse {
+        .appearing {
+            animation: appearDisappear 4s infinite;
+        }
+        
+        @keyframes appearDisappear {
             0%, 100% {
-                text-shadow: 
-                    0 0 5px #fff,
-                    0 0 10px #fff,
-                    0 0 15px #fff,
-                    0 0 20px var(--neon-text-color),
-                    0 0 35px var(--neon-text-color),
-                    0 0 40px var(--neon-text-color),
-                    0 0 50px var(--neon-text-color),
-                    0 0 75px var(--neon-text-color);
+                opacity: 0;
             }
-            50% {
-                text-shadow: 
-                    0 0 2px #fff,
-                    0 0 5px #fff,
-                    0 0 7px #fff,
-                    0 0 10px var(--neon-text-color),
-                    0 0 17px var(--neon-text-color),
-                    0 0 20px var(--neon-text-color),
-                    0 0 25px var(--neon-text-color),
-                    0 0 37px var(--neon-text-color);
+            10%, 90% {
+                opacity: 1;
             }
         }
         
@@ -103,36 +84,17 @@
             margin-bottom: 3rem;
             font-weight: 500;
             text-transform: uppercase;
-            background: linear-gradient(to right, #00c6ff, #0072ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #fff;
             letter-spacing: 0.2rem;
-            animation: fadeInUp 1s 0.5s both;
         }
         
         .warning-container {
             position: relative;
             padding: 2rem;
             margin-top: 1rem;
-            border: 0.4rem solid transparent;
+            border: 0.4rem solid rgba(255, 0, 0, 0.7);
             border-radius: 1rem;
-            animation: borderGlow 4s infinite alternate;
-            overflow: hidden;
-        }
-        
-        @keyframes borderGlow {
-            0% {
-                border-color: rgba(255, 0, 0, 0.7);
-                box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-            }
-            50% {
-                border-color: rgba(255, 0, 0, 0.3);
-                box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-            }
-            100% {
-                border-color: rgba(255, 0, 0, 0.7);
-                box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
-            }
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.7);
         }
         
         .warning {
@@ -142,78 +104,8 @@
             text-transform: uppercase;
             letter-spacing: 0.2rem;
             line-height: 1.3;
-            position: relative;
-            animation: textFlicker 3s infinite alternate;
-        }
-        
-        @keyframes textFlicker {
-            0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
-                opacity: 1;
-                text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 0 0 40px #ff0000, 0 0 80px #ff0000, 0 0 90px #ff0000, 0 0 100px #ff0000, 0 0 150px #ff0000;
-            }
-            20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
-                opacity: 0.4;
-                text-shadow: none;
-            }
-        }
-        
-        /* Cyber lines animation */
-        .cyber-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            overflow: hidden;
-        }
-        
-        .cyber-line {
-            position: absolute;
-            background: linear-gradient(to right, transparent, rgba(0, 30, 255, 0.5), transparent);
-            height: 1px;
-            width: 100%;
-            animation: moveLine 4s infinite linear;
-        }
-        
-        .cyber-line:nth-child(1) {
-            top: 20%;
-            animation-delay: 0s;
-        }
-        
-        .cyber-line:nth-child(2) {
-            top: 40%;
-            animation-delay: 1s;
-        }
-        
-        .cyber-line:nth-child(3) {
-            top: 60%;
-            animation-delay: 2s;
-        }
-        
-        .cyber-line:nth-child(4) {
-            top: 80%;
-            animation-delay: 3s;
-        }
-        
-        @keyframes moveLine {
-            0% {
-                transform: translateX(-100%);
-            }
-            100% {
-                transform: translateX(100%);
-            }
-        }
-        
-        /* Matrix-like rain effect */
-        .matrix-rain {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            opacity: 0.15;
+            text-shadow: 0 0 4px #fff, 0 0 11px #fff, 0 0 19px #fff, 
+                         0 0 40px #ff0000, 0 0 80px #ff0000, 0 0 90px #ff0000;
         }
         
         /* Responsive styles */
@@ -251,92 +143,44 @@
     </style>
 </head>
 <body>
-    <div class="matrix-rain" id="matrix-rain"></div>
-    <div class="container animate__animated animate__fadeIn">
-        <div class="glitch-wrapper">
-            <h1 class="animate__animated animate__fadeInDown">CDN</h1>
+    <div class="container">
+        <div class="title-container">
+            <!-- Multiple CDN instances that will appear and disappear -->
+            <h1 class="appearing" style="animation-delay: 0s;">FIREWALL</h1>
+            <h1 class="appearing" style="animation-delay: 1s;">FIREWALL</h1>
+            <h1 class="appearing" style="animation-delay: 2s;">FIREWALL</h1>
+            <h1 class="appearing" style="animation-delay: 3s;">FIREWALL</h1>
         </div>
         
-        <div class="question animate__animated animate__fadeInUp">WHY DID U COME HERE?</div>
+        <div class="question">WHY DID U COME HERE?</div>
         
         <div class="warning-container">
-            <div class="cyber-lines">
-                <div class="cyber-line"></div>
-                <div class="cyber-line"></div>
-                <div class="cyber-line"></div>
-                <div class="cyber-line"></div>
-            </div>
-            <div class="warning animate__animated animate__pulse animate__infinite">
+            <div class="warning">
                 FUCKING YOU CAN NOT TAKE DOWN THIS SITE!!!
             </div>
         </div>
     </div>
 
     <script>
-        // Matrix rain effect
+        // Create additional CDN elements dynamically
         document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.createElement('canvas');
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            canvas.style.display = 'block';
-            document.getElementById('matrix-rain').appendChild(canvas);
+            const titleContainer = document.querySelector('.title-container');
             
-            const ctx = canvas.getContext('2d');
-            
-            // Matrix characters
-            const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%";
-            const characters = matrix.split('');
-            
-            const fontSize = 16;
-            const columns = canvas.width / fontSize;
-            
-            // Array for drops - one per column
-            const drops = [];
-            
-            // Set initial position for each drop
-            for (let i = 0; i < columns; i++) {
-                drops[i] = 1;
-            }
-            
-            // Draw the matrix
-            function draw() {
-                // Black semi-transparent background to show trail
-                ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Create additional CDN elements at random positions
+            for (let i = 0; i < 8; i++) {
+                const cdnElement = document.createElement('h1');
+                cdnElement.textContent = 'CDN';
+                cdnElement.classList.add('appearing');
                 
-                ctx.fillStyle = '#0f0'; // Digital green color
-                ctx.font = fontSize + 'px monospace';
+                // Random position within container
+                const randomX = Math.floor(Math.random() * 40) - 20; // -20px to +20px
+                const randomY = Math.floor(Math.random() * 40) - 20; // -20px to +20px
                 
-                for (let i = 0; i < drops.length; i++) {
-                    // Get random character
-                    const text = characters[Math.floor(Math.random() * characters.length)];
-                    
-                    // Draw the character
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    
-                    // Move to the next position
-                    if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                        drops[i] = 0;
-                    }
-                    
-                    // Increment position
-                    drops[i]++;
-                }
+                cdnElement.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                cdnElement.style.animationDelay = `${Math.random() * 4}s`;
+                
+                titleContainer.appendChild(cdnElement);
             }
-            
-            setInterval(draw, 35);
-            
-            // Resize canvas when window is resized
-            window.addEventListener('resize', function() {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-                // Recalculate columns
-                const newColumns = canvas.width / fontSize;
-                // Reset drops array
-                for (let i = 0; i < newColumns; i++) {
-                    if (!drops[i]) drops[i] = 1;
-                }
-            });
         });
     </script>
 </body>
