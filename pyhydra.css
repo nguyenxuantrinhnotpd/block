@@ -3,14 +3,13 @@
     --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
-    --dark-bg: #0a0a0a;
-    --card-bg: rgba(255, 255, 255, 0.1);
-    --glass-border: rgba(255, 255, 255, 0.2);
+    --dark-bg: #0f0f23;
     --text-primary: #ffffff;
-    --text-secondary: #b0b0b0;
-    --shadow-primary: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    --shadow-hover: 0 35px 60px -12px rgba(102, 126, 234, 0.4);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
 }
+
 
 * {
     margin: 0;
